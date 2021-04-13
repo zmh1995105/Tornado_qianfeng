@@ -1,7 +1,8 @@
 import tornado.web
 from tornado.web import RequestHandler
 import json
-
+import os
+import config
 
 class IndexHandler(tornado.web.RequestHandler):
     def get(self, *args, **kwargs):
@@ -130,7 +131,14 @@ class UploadHandler(tornado.web.RequestHandler):
         self.render("../templates/upload.html")
     
     def post(self, *args, **kwargs):
-        pass
+        files = self.request.files
+        for filename in files.keys():
+            file_arr = files[filename]
+            for obj in file_arr:
+                path = os.path.join(config.BASE_DIRS, "upfile", obj.filename)
+                with open(path, "wb") as f:
+                    f.write(obj.body)
+        self.write("ok")
         
 
 
