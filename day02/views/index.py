@@ -106,6 +106,7 @@ class CustomHandler(tornado.web.RequestHandler):
 
         # 若default未设置，会抛出异常
         # strip表示是否过滤两边的空白字符，默认为True
+        # 如果出现同名参数，会选择最后一个参数
         self.get_query_argument("a", default=100, strip=True)
 
         # 同名参数
@@ -114,14 +115,22 @@ class CustomHandler(tornado.web.RequestHandler):
 
 class SignupHandler(tornado.web.RequestHandler):
     def get(self, *args, **kwargs):
-        self.render("signup.html")
+        self.render("../templates/signup.html")
 
     def post(self, *args, **kwargs):
         username = self.get_body_argument("username")
         passwd = self.get_body_argument("password")
         hobbies = self.get_body_arguments("hobby")
-        print(username, passwd)
-        print(hobbies)
+        self.write("body: %s, passwrd: %s" %(username, passwd))
+        self.write(hobbies[0])
+
+        
+class UploadHandler(tornado.web.RequestHandler):
+    def get(self, *args, **kwargs):
+        self.render("../templates/upload.html")
+    
+    def post(self, *args, **kwargs):
+        pass
         
 
 

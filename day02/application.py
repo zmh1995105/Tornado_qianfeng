@@ -18,7 +18,8 @@ class Applicaiton(tornado.web.Application):
             tornado.web.url(r"/jason", index.JasonHandler, {"w1": "good", "w2": "nice"},
                             name="jason"),
             (r"/custom/(?P<h1>\w+)/(?P<h3>\w+)/(?P<h2>\w+)", index.CustomHandler),
-            (r"/signup", index.SignupHandler)
+            (r"/signup", index.SignupHandler),
+            (r"/upload", index.UploadHandler)
 
         ]
         super(Applicaiton, self).__init__(handlers, **config.settings)
