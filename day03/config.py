@@ -11,3 +11,10 @@ settings = {
     "templates_path": os.path.join(BASE_DIRS, "templates"),
     "autoescape": None
 }
+
+mysql = {
+    "host": "127.0.0.1",
+    "user": "root",
+    "passwd": "zmh1995105",
+    "dbName": "test",
+}
