@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" charset="utf-8"
+            src="{{static_url('js/jquery.min.js')}}"></script>
+</head>
+<body>
+    <form action="/login?next=/home" method="post">
+<!--        {% module_xsrf_form_html() %}-->
+        <input id="h1" type="hidden" name="_xsrf" value="">
+        name: <input type="text" name="username"/>
+        <hr/>
+        password: <input type="password" name="password">
+        <hr/>
+        <button onclick="login()">login</button>
+<!--        favorites:-->
+<!--        <input type="checkbox" value="power" name="hobby"> power-->
+<!--        <input type="checkbox" value="money" name="hobby"> money-->
+<!--        <input type="checkbox" value="book" name="hobby"> book-->
+<!--        <input type="submit" value="signup">-->
+
+    </form>
+    <script>
+        function getCookie(name) {
+            var cook = document.cookie.match("\\b" + name + "([^;]*)\\b")
+            return cook ? cook[1] : undefined
+        }
+        // document.getElementById("hi").value = getCookie("_xsrf")
+        function login() {
+            // console.log("******")
+            // $.post("/login", "_xsrf=" + getCookie("_xsrf") + "&username=" + "jason" +
+            // "&passwd=" + "123", function (data) {
+            //     alert("ok")
+            // })
+            data = {
+                "username": "jason",
+                "passwd": "123"
+            }
+            datastr = JSON.stringify(data)
+            $.ajax(
+                {
+                    url: "/login",
+                    method: "POST",
+                    data: datastr,
+                    success: function (data) {
+                        alert("ok")
+                    },
+                    headers: {
+                        "X-XSRFToken": getCookie("_xsrf")
+                    }
+                }
+
+            )
+        }
+    </script>
+</body>
+
+</html>

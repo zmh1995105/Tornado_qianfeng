@@ -116,7 +116,7 @@ class CustomHandler(tornado.web.RequestHandler):
 
 class SignupHandler(tornado.web.RequestHandler):
     def get(self, *args, **kwargs):
-        self.render("../templates/signup.html")
+        self.render("../templates/login.html")
 
     def post(self, *args, **kwargs):
         username = self.get_body_argument("username")

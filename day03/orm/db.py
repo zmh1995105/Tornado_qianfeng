@@ -1,14 +1,26 @@
-import mysql
+import pymysql
+from ..config import mysql
 
-class MysqlDB():
-    def __init__(self, host, user, passwd, dbName):
-        self.host = host
-        self.user = user
-        self.passwrd = passwd
-        self.dbName = dbName
+
+def singleton(cls, *args, **kwargs):
+    instances = {}
+    def __singleton():
+        if cls not in instances:
+            instances[cls] = cls(*args, **kwargs)
+        return instances[cls]
+    return __singleton()
+
+
+@singleton
+class MysqlDB(object):
+    host = mysql["host"]
+    user = mysql["user"]
+    passwd = mysql["passwd"]
+    dbName = mysql["dbName"]
     
     def connect(self):
-        self.db = pymysql.connect(self.host, self.user, self.passwd, self.dbName)
+        self.db = pymysql.connect(user=self.user, password=self.passwd,
+                                  host=self.host, database=self.dbName)
         self.cursor = self.db.cursor()
         
     def close(self):
@@ -28,33 +40,35 @@ class MysqlDB():
         
     def get_all(self, sql):
         res = ()
-        try;
+        try:
             self.connect()
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             self.close()
         except Exception as e:
-            print e
+            print(e)
         return res
         
     def get_all_obj(self, sql, tableName, *args):
         resList = []
         fieldsList = []
-        if(len(args) > 0):
+        if len(args) > 2:
             for item in args:
                 fieldsList.append(item)
         else:
-          fieldsSql = "select COLUMN_NAME from information_schema.COLUMNS where table_name = '%s' and table_schema = '%s'" % (tableName, self.dbName)
+          fieldsSql = "select COLUMN_NAME from information_schema.COLUMNS " \
+                      "where table_name = '%s' and table_schema = '%s'" \
+                      % (tableName, self.dbName)
           fields = self.get_all(fieldsSql)
           for item in fields:
-              fieldList.append(item[0])    
+              fieldsList.append(item[0])
                   
         res = self.get_all(sql)
         for item in res:
             obj = {}
             count = 0
             for i in item:
-              obj[fieldLsList[count]] = i
+              obj[fieldsList[count]] = i
               count += 1
             resList.append(obj)
         return resList
@@ -79,4 +93,4 @@ class MysqlDB():
             print(e)
             self.db.rollback()
         return count
-            
+

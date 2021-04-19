@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trans</title>
+  
+</head>
+<body>
+    {{str}}
+    {% raw str %}
+    {% autoescape None %}
+    {{str}}
+    {{escape(str)}}
+    {% block main %}
+    {% end %}
+    
+</body>
+</html>
+

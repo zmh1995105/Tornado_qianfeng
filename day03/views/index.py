@@ -1,7 +1,7 @@
 import tornado.web
 from tornado.web import RequestHandler
 import json
-
+from ..model import Students
 
 class HomeHandler(tornado.web.RequestHandler):
     def get(self, *args, **kwargs):
@@ -27,12 +27,17 @@ class HomeHandler(tornado.web.RequestHandler):
 
 class TransHandler(tornado.web.RequestHandler):
     def get(self, *args, **kwargs): 
-        str = "<h1>jason is a good man.</h1>"
+        str = "<h1>jason is a 12312good man.</h1>"
 
         self.render("../templates/trans.html", str=str)
-        
+
+
 class StudentHandler(tornado.web.RequestHandler):
-    def get(self, *args, **kwargs): 
-        stus = []
-        self.render("student.html", stus=stus)
+    def get(self, *args, **kwargs):
+        s = Students("jason", 2)
+        s.save()
+        # stus = self.application.db.get_all_obj("select * from students", "students")
+        stus = Students.all()
+        print(stus)
+        self.render("../templates/student.html", stus=stus)
 
