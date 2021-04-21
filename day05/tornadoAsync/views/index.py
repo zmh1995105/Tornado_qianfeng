@@ -11,7 +11,32 @@ class HomeHandler(tornado.web.RequestHandler):
         self.render("../templates/home.html")
 
 class ChatHandler(WebSocketHandler):
-    pass
+    users = []
+
+    def open(self):
+        self.users.append(self)
+        for user in self.users:
+            user.write_message(u"[%s]login" % self.request.remote_ip,
+                               binary=False)
+        print("start websocket")
+
+    def on_message(self, message):
+        """
+        当客户端发送消息过来时调用
+        """
+        for user in self.users:
+            user.write_message(u"[%s]said: " % self.request.remote_ip, message)
+
+    def on_close(self):
+        """
+        当websocket关闭后调用
+        """
+        self.users.remove(self)
+        for user in self.users:
+            user.write_message(u"[%s]logout" % self.request.remote_ip)
+
+    def check_origin(self, origin: str):
+        return True
 
 
 class StudentsHandler(tornado.web.RequestHandler):

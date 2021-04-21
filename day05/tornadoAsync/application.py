@@ -11,5 +11,6 @@ class Applicaiton(tornado.web.Application):
             (r"/students2", index.Students2Handler),
             (r"/students3", index.Students3Handler),
             (r"/home", index.HomeHandler),
+            (r"/chat", index.ChatHandler),
         ]
         super(Applicaiton, self).__init__(handlers, **config.settings)

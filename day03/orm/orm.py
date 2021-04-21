@@ -1,6 +1,7 @@
 import tornado.web
 from db import MysqlDB
 
+<<<<<<< HEAD
 
 class ORM(tornado.web.RequestHandler):
     def save(self):
@@ -17,6 +18,12 @@ class ORM(tornado.web.RequestHandler):
             sql = "insert into " + table_name + " " + field_str + " values" + value_str
             print(sql)
             MysqlDB().insert(sql)
+=======
+class ORM(tornado.web.RequestHandler):
+    def save(self):
+        sql = "insert into students (name, age) values ()"
+        self.application.db.insert(sql)
+>>>>>>> ce9f5eb24fa85884560f5a5ec19e9976ac7e35e4
 
     def delete(self):
         pass
@@ -24,6 +31,7 @@ class ORM(tornado.web.RequestHandler):
     def update(self):
         pass
 
+<<<<<<< HEAD
     @classmethod
     def all(cls):
         table_name = cls.__name__.lower()
@@ -33,4 +41,10 @@ class ORM(tornado.web.RequestHandler):
 
     @classmethod
     def filter(cls):
+=======
+    def all(self):
+        pass
+
+    def filter(self):
+>>>>>>> ce9f5eb24fa85884560f5a5ec19e9976ac7e35e4
         pass

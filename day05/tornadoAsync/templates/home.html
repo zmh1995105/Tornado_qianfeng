@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Talking web</title>
+    <script type="text/javascript" charset="utf-8"
+    src="{{static_url('js/jquery.min.js')}}"></script>
 
 </head>
 <body>
@@ -12,8 +14,18 @@
         <button onclick="sendMessage">send</button>
     </div>
     <script>
+        // 建立websocket连接
+        var ws = new WebSocket("ws://127.0.0.1:8000/chat")
+        // 接受服务器消息
+        ws.onmessage = function (e) {
+            $('#contents').append("<p>" + e.data + "</p>");
+        }
         function sendMessage() {
             console.log("sendMsg...")
+            var message = $("#message").val();
+            ws.send(message);
+            // message 置空
+            $("#message").val("")
         }
 
     </script>

@@ -2,6 +2,8 @@ import tornado.web
 from views import index
 import config
 import os
+from day03.orm.db import MysqlDB
+
 
 
 class Applicaiton(tornado.web.Application):
@@ -14,3 +16,7 @@ class Applicaiton(tornado.web.Application):
 
         ]
         super(Applicaiton, self).__init__(handlers, **config.settings)
+<<<<<<< HEAD
+=======
+        self.db = MysqlDB(**config.mysql)
+>>>>>>> ce9f5eb24fa85884560f5a5ec19e9976ac7e35e4

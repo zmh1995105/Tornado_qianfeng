@@ -36,8 +36,12 @@ class StudentHandler(tornado.web.RequestHandler):
     def get(self, *args, **kwargs):
         s = Students("jason", 2)
         s.save()
+<<<<<<< HEAD
         # stus = self.application.db.get_all_obj("select * from students", "students")
         stus = Students.all()
+=======
+        stus = self.application.db.get_all_obj("select * from students", "students")
+>>>>>>> ce9f5eb24fa85884560f5a5ec19e9976ac7e35e4
         print(stus)
         self.render("../templates/student.html", stus=stus)
 

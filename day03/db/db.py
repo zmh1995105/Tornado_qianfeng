@@ -1,27 +1,4 @@
 import pymysql
-<<<<<<< HEAD
-<<<<<<<< HEAD:day03/orm/db.py
-from ..config import mysql
-
-
-def singleton(cls, *args, **kwargs):
-    instances = {}
-    def __singleton():
-        if cls not in instances:
-            instances[cls] = cls(*args, **kwargs)
-        return instances[cls]
-    return __singleton()
-
-
-@singleton
-class MysqlDB(object):
-    host = mysql["host"]
-    user = mysql["user"]
-    passwd = mysql["passwd"]
-    dbName = mysql["dbName"]
-========
-=======
->>>>>>> ce9f5eb24fa85884560f5a5ec19e9976ac7e35e4
 
 
 class MysqlDB(object):
@@ -30,10 +7,6 @@ class MysqlDB(object):
         self.user = user
         self.passwd = passwd
         self.dbName = dbName
-<<<<<<< HEAD
->>>>>>>> ce9f5eb24fa85884560f5a5ec19e9976ac7e35e4:day03/db.py
-=======
->>>>>>> ce9f5eb24fa85884560f5a5ec19e9976ac7e35e4
     
     def connect(self):
         self.db = pymysql.connect(user=self.user, password=self.passwd,
